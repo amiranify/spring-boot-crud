@@ -77,3 +77,35 @@ public interface UserRepository extends JpaRepository<User , Long> {
 - **User** - сущность, с которой будет взаимодействовать данный JPA -
 репозиторий.
 - **Long** - тип первичного ключа.
+
+## UserService
+Данный сервис является необязательным, так как в нашем приложении
+отсутствует логика. Однако при расширении функционала приложения вся
+логика будет в нем находиться.
+**Реализация:**
+```java
+@Service
+public class UserService {
+ private final UserRepository userRepository ;
+ @Autowired
+ public UserService (UserRepository userRepository) {
+ this.userRepository = userRepository ;
+ }
+ public User findById(Long id){
+ return userRepository .getOne(id) ;
+ }
+ public List<User> findAll(){
+ return userRepository .findAll();
+ }
+ public User saveUser(User user){
+ return userRepository .save(user) ;
+ }
+ public void deleteById(Long id){
+ userRepository .deleteById(id) ;
+ }
+}
+```
+## Controller
+С этим компонентом мы уже знакомы. Данный компонент необходим для
+взаимодействия пользователя с приложением по http. Контроллеру
+необходим UserService для взаимодействия с БД.
