@@ -110,6 +110,7 @@ public class UserService {
 взаимодействия пользователя с приложением по http. Контроллеру
 необходим UserService для взаимодействия с БД.
 ### Создание контроллера 
+Запросы для реализации CRUD - функционала. Первая часть
 ```java
 @Controller
 public class UserController {
@@ -158,4 +159,88 @@ public class UserController {
         return "redirect:/users";
     }
 }
+```
+## Создание View
+1. View для просмотра списка пользователей *user-list*
+2. View для создания пользователя *user-create*
+3. View для обновления пользователя *user-update*
+
+**user-list**
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div th:switch="${users}">
+    <h2 th:case="null">No users found!</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td><a th:href="@{user-update/{id}(id=${user.id})}">Edit</a></td>
+                <td><a th:href="@{user-delete/{id}(id=${user.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/user-create">Create user</a></p>
+</div>
+</body>
+</html>
+```
+**user-create**
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body>
+<form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
+    <label for="firstName">First name</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+    <label for="lastName">Last name</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+    <input type="submit" value="Create User">
+</form>
+</body>
+</html>
+```
+**user-update**
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="UTF-8">
+<title>Create user</title>
+</head>
+<body>
+<form action="#" th:action="@{/user-update}" th:object="${user}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+    <br/>
+    <label for="firstName">First name</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+    <br/>
+    <label for="lastName">Last name</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+    <br/>
+    <input type="submit" value="Update User">
+</form>
+</body>
+</html>
 ```
