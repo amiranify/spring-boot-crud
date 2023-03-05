@@ -13,14 +13,21 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "age")
+    private Integer age;
+    @Column(name = "gender")
+    private Gender gender;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName) {
+    public User(Long id, String firstName, String lastName, Integer age, Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+
     }
 
     public Long getId() {
@@ -47,16 +54,32 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName);
+        return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(age, user.age) && Objects.equals(gender, user.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName);
+        return Objects.hash(id, firstName, lastName, age, gender);
     }
 }
