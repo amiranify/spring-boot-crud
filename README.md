@@ -54,3 +54,26 @@
 - firstName - имя
 - lastName - фамилию
  
+```java
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    // Геттеры и сеттеры, конструкторы опущены для наглядности
+}
+```
+## Создание JPA - репозитория.
+Данная сущность необходима для взаимодействия с БД:
+```java
+public interface UserRepository extends JpaRepository<User , Long> {
+}
+```
+- **User** - сущность, с которой будет взаимодействовать данный JPA -
+репозиторий.
+- **Long** - тип первичного ключа.
