@@ -244,3 +244,12 @@ public class UserController {
 </body>
 </html>
 ```
+## Необходимый класс для запуска приложения
+```java
+@SpringBootApplication
+public class UserCrudApplication {
+ public static void main(String[] args) {
+ SpringApplication. run(UserCrudApplication. class, args);
+ }
+}
+```
